@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marble Buddy | Growtopia Style Clay Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gt-blue: #2c3e50;
+            --gt-window-bg: #4a6fa1;
+            --gt-border-light: #7da5d9;
+            --gt-border-dark: #1a2a3a;
+            --gt-yellow: #f1c40f;
+        }
+
+        body {
+            background: #ffff; /* Background gelap agar UI pop-up terlihat */
+            font-family: 'Press Start 2P', cursive;
+            color: white;
+            image-rendering: pixelated;
+        }
+
+        /* Container Menu Khas Growtopia */
+        .gt-window {
+            background-color: var(--gt-window-bg);
+            border: 6px solid var(--gt-border-dark);
+            outline: 4px solid var(--gt-border-light);
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+        }
+
+        .gt-header {
+            background-color: #2e4a7d;
+            border-bottom: 4px solid var(--gt-border-dark);
+            padding: 15px;
+            text-shadow: 2px 2px #000;
+        }
+
+        /* Input Field ala GT */
+        input, textarea, select {
+            background: #e1e1e1 !important;
+            border: 4px solid #000 !important;
+            color: #333 !important;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px !important;
+            padding: 10px !important;
+        }
+
+        /* Tombol "Punch" / OK ala GT */
+        .gt-btn {
+            background: #27ae60;
+            border: 4px solid #000;
+            box-shadow: inset -4px -4px 0px #1a7a43;
+            color: white;
+            padding: 12px;
+            text-shadow: 2px 2px #000;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .gt-btn:active {
+            transform: scale(0.95);
+            box-shadow: none;
+        }
+
+        .pixel-label {
+            font-size: 12px;
+            color: var(--gt-yellow);
+            text-shadow: 2px 2px #000;
+        }
+
+        /* Animasi melayang sedikit */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .logo-float { animation: float 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="text-center mb-8 logo-float">
+        <h1 class="text-3xl md:text-4xl text-yellow-400 mb-2" style="text-shadow: 4px 4px #b38f00, 6px 6px #000;">MARBLE BUDDY</h1>
+        <p class="text-[10px] text-blue-300 uppercase tracking-widest">Custom Clay Keychain World</p>
+    </div>
+
+    <div class="gt-window w-full max-w-lg overflow-hidden">
+        <div class="gt-header text-center">
+            <h2 class="text-sm">CREATE NEW ORDER</h2>
+        </div>
+
+        <form id="orderForm" class="p-6 space-y-6">
+            <div>
+                <label class="pixel-label block mb-2">GrowID / Name:</label>
+                <input type="text" id="nama" required class="w-full" placeholder="Enter name...">
+            </div>
+
+            <div>
+                <label class="pixel-label block mb-2">Keychain Design:</label>
+                <textarea id="request" rows="3" required class="w-full" placeholder="Describe your clay design..."></textarea>
+            </div>
+
+            <div>
+                <label class="pixel-label block mb-2">Main Color:</label>
+                <select id="warna" class="w-full">
+                    <option value="Red (Crimson)">Red</option>
+                    <option value="Blue (Aqua)">Blue</option>
+                    <option value="Green (Emerald)">Green</option>
+                    <option value="Gold (Yellow)">Gold</option>
+                    <option value="Purple (Dark)">Purple</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="pixel-label block mb-2">Quantity:</label>
+                <input type="number" id="jumlah" min="1" value="1" class="w-full">
+            </div>
+
+            <div class="flex justify-center pt-4">
+                <button type="submit" class="gt-btn w-full text-sm">
+                    PUNCH TO SEND! 
+                </button>
+            </div>
+        </form>
+        
+        <div class="bg-black/20 p-3 text-center text-[8px] text-gray-300">
+            v1.0.2 - Custom Clay Items Added!
+        </div>
+    </div>
+
+    <footer class="mt-8 text-[8px] text-gray-500 uppercase">
+        © 2021 Marble Buddy - Happy shopping!
+    </footer>
+
+    <script>
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Ambil data
+            const nama = document.getElementById('nama').value;
+            const request = document.getElementById('request').value;
+            const warna = document.getElementById('warna').value;
+            const jumlah = document.getElementById('jumlah').value;
+
+            // Format Pesanan Ala Game
+            const waNumber = "6281373995530";
+            const text = `*NEW ORDER: MARBLE BUDDY*%0A` +
+                         `----------------------------%0A` +
+                         `👤 *GrowID/Nama:* ${nama}%0A` +
+                         `🎨 *Request:* ${request}%0A` +
+                         `🌈 *Warna:* ${warna}%0A` +
+                         `📦 *Jumlah:* ${jumlah} pcs%0A` +
+                         `----------------------------%0A` +
+                         `_Sending from World: MARBLE BUDDY_`;
+
+            // Redirect ke WhatsApp
+            window.location.href = `https://wa.me/${waNumber}?text=${text}`;
+        });
+    </script>
+</body>
+</html>
